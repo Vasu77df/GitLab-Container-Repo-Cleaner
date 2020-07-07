@@ -41,3 +41,51 @@ root@user:~$ crontab -e
  - You can edit this using the reference below 
 
  ![cron_cmd_image](https://github.com/Vasu77df/GitLab-Container-Repo-Cleaner/blob/master/images/cron_cmd_image.png)
+
+**The default configuration is to delete all Image tags in the Contaner registry that are older than 1 day but 5 images will be retained from deletion.**
+
+---
+
+ ### Editing *credentials.json* file for specific user and different filters
+
+- The contents of the credential.json file can be seen below
+
+```json
+{
+    "User ID": 6336446,
+    "Access-Token": "eXUd7tXUx6_gyEauXZ78",
+    "Project ID": "19708510",
+    "Registry ID": "1197041",
+    "name_regex_delete": ".*", 
+    "keep_n": 5,
+    "older_than": "1d",
+    "name_regex_keep": ".*"
+}
+```
+
+- This file need to be edited according to the users accessability. 
+
+- *User ID* can be found in [gitlab.com/profile](gitlab.com/profile) after you login. 
+
+- A personal *access token* has to requested to access the Gitlab Container Registry API that the deletor program uses. 
+
+![access_token](https://github.com/Vasu77df/GitLab-Container-Repo-Cleaner/blob/master/images/access-token.png)
+
+- The *Project ID* can be found at the home page of every project.
+
+- The *Registry ID* is the ID for for the registry that you would like to delete image tags in. It can be found be entering the following command on your terminal or powershell.
+
+``` console 
+root@user:~$ curl --header "Private-Token: your-access-token" "https://gitlab.com/api/v4/projects/project_id:/registry/repositories" | python3 -m json.tool
+
+```
+
+- You an also find out the registry ID by running the regID_finder.py program using the command 
+
+``` console 
+root@user:~$ python3 regID_finder.py
+```
+
+- The other parameters you can see are various filters that are used to delete container image tags according to certain rules. 
+
+![api_filter]()
