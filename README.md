@@ -30,4 +30,8 @@ root@user:~$ crontab -e
 
 ![crontab_image](https://github.com/Vasu77df/GitLab-Container-Repo-Cleaner/blob/master/images/crontab_image.png)
 
+- Enter the command seen in the image or in the you can see below
+
+```bash
  0 9 * * * /bin/python3 /path/to/deletor.py
+ ```
