@@ -1,9 +1,33 @@
 # Setup of the Gitlab Container registry deletor program as Scheduled job
 
 ## For Windows : Setting up task schedular
- - The deletor program would require python3 to installed if not avaiable in the system. 
+ - The deletor program would require python3 to installed if not avaiable in the system. It can be downloaded and installed [here](https://www.python.org/downloads/). 
 
- 
+ - The dependency libraries have to then be installed. This is done by opening Powershell navigating to the program folder and installing the requriments by using the following command. 
+
+ ```powershell
+ C:\Users> SET-LOCATION \path\to\program
+ C:\Users> pip install -r requirements.txt
+ ```
+
+ - Download the program from [here](https://gitlab.com/vasu3797/gitlab-image-repo-cleaner) and extract all contents of the files in your desired directory. 
+
+ - Search for Task Schedular in the Start Menu and follow the steps seen below
+
+ ![task_start](https://github.com/Vasu77df/GitLab-Container-Repo-Cleaner/blob/master/images/task_start.png)
+
+![task_schedule](https://github.com/Vasu77df/GitLab-Container-Repo-Cleaner/blob/master/images/task_schedule.png)
+
+![task_time](https://github.com/Vasu77df/GitLab-Container-Repo-Cleaner/blob/master/images/task_date.png)
+
+- The command for the arguments field can be found bellow:
+
+```powershell
+C:\Users> python /path/to/program/deletor.py
+```
+![task_action](https://github.com/Vasu77df/GitLab-Container-Repo-Cleaner/blob/master/images/task_cmd.png)
+
+
 ## For Linux: Setting up a cron job
  
  - The deletor program would require python3 to installed if not avaiable, this can be done by running the following command in the terminal
@@ -17,7 +41,7 @@
 ```console 
 root@user:~$ sudo yum install python3
 ```
-- After installation copy or clone all the files found in the repsitory [here](https://gitlab.com/vasu3797/gitlab-image-repo-cleaner) or by using the command 
+- After installation copy or clone all the files of the program found in the repsitory [here](https://gitlab.com/vasu3797/gitlab-image-repo-cleaner) or by using the command 
 
 ```console
 root@user:~$ git clone https://gitlab.com/vasu3797/gitlab-image-repo-cleaner.git
@@ -100,4 +124,3 @@ root@user:~$ python3 regID_finder.py
 
 ![api_filter](https://github.com/Vasu77df/GitLab-Container-Repo-Cleaner/blob/master/images/api_filter.png)
 
-## 
