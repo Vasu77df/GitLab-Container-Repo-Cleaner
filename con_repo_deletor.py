@@ -17,8 +17,8 @@ def payload_dictbuidler(payloads):
         payload['Payload {}'.format(i)] = out
     return payload
 
-def tags_deletor(access_token, prj_id, reg_id, name_regex_delete, keep_n, older_than):
-    data = {'name_regex_delete': name_regex_delete,'keep_n': keep_n, 'older_than': older_than}
+def tags_deletor(access_token, prj_id, reg_id, name_regex_delete, keep_n, older_than, name_regex_keep):
+    data = {'name_regex_delete': name_regex_delete,'keep_n': keep_n, 'older_than': older_than, 'name_regex_keep': name_regex_keep}
     response = requests.delete("https://gitlab.com/api/v4/projects/{prj_id}/registry/repositories/{reg_id}/tags".format(prj_id=prj_id, reg_id=reg_id), data=data, headers = {'Private-Token': access_token})
     response_status = str(response)
     response_msg = json.loads(response.text)
@@ -39,10 +39,11 @@ def main():
         name_regex_delete = data["name_regex_delete"]
         keep_n = data["keep_n"]
         older_than = data["older_than"]
+        name_regex_keep = data["name_regex_keep"]
         dk_images = image_get(access_token, prj_id)
         images = payload_dictbuidler(dk_images)
         pp = pprint.PrettyPrinter(indent=4)
         pp.pprint(images)
         print("Procesing Image Tags......")
-        tags_deletor(access_token, prj_id, reg_id, name_regex_delete, keep_n, older_than)
+        tags_deletor(access_token, prj_id, reg_id, name_regex_delete, keep_n, older_than, name_regex_keep)
 
