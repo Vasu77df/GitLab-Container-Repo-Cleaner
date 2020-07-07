@@ -1,7 +1,7 @@
-# Setup of the Gitlab Container registry deletor program as Scheduled job
+# Setup of the Gitlab Container registry cleaner program as Scheduled job
 
 ## For Windows : Setting up task schedular
- - The deletor program would require python3 to installed if not avaiable in the system. It can be downloaded and installed [here](https://www.python.org/downloads/). 
+ - The cleaner program would require python3 to installed if not avaiable in the system. It can be downloaded and installed [here](https://www.python.org/downloads/). 
 
  - The dependency libraries have to then be installed. This is done by opening Powershell navigating to the program folder and installing the requriments by using the following command. 
 
@@ -23,14 +23,14 @@
 - The command for the arguments field can be found bellow:
 
 ```powershell
-C:\Users> python /path/to/program/deletor.py
+C:\Users> python /path/to/program/cleaner.py
 ```
 ![task_action](https://github.com/Vasu77df/GitLab-Container-Repo-Cleaner/blob/master/images/task_cmd.png)
 
 
 ## For Linux: Setting up a cron job
  
- - The deletor program would require python3 to installed if not avaiable, this can be done by running the following command in the terminal
+ - The cleaner program would require python3 to installed if not avaiable, this can be done by running the following command in the terminal
 
 #### For Debian based systems
  ```console 
@@ -61,7 +61,7 @@ root@user:~$ crontab -e
 - Enter the command seen in the image or in the you can see below
 
 ```bash
- 0 9 * * * /bin/python3 /path/to/deletor.py
+ 0 9 * * * /bin/python3 /path/to/cleaner.py
  ```
 
  - This command runs the Container Registry Cleaner Program every day at 9 am. 
@@ -73,7 +73,7 @@ root@user:~$ crontab -e
  - The program can also be manually run by navigating to the folder of the program directory and entering the command.
 
  ```console
-root@user:~$ python3 deletor.py
+root@user:~$ python3 cleaner.py
 ```
 
 **The default configuration is to delete all Image tags in the Contaner registry that are older than 1 day but 5 images will be retained from deletion.**
@@ -101,13 +101,13 @@ root@user:~$ python3 deletor.py
 
 - *User ID* can be found in [gitlab.com/profile](gitlab.com/profile) after you login. 
 
-- A personal *access token* has to requested to access the Gitlab Container Registry API that the deletor program uses. 
+- A personal *access token* has to requested to access the Gitlab Container Registry API that the cleaner program uses. 
 
 ![access_token](https://github.com/Vasu77df/GitLab-Container-Repo-Cleaner/blob/master/images/access-token.png)
 
 - The *Project ID* can be found at the home page of every project.
 
-- The *Registry ID* is the ID for for the registry that you would like to delete image tags in. It can be found be entering the following command on your terminal or powershell.
+- The *Registry ID* is the ID for for the registry that you would like to delete image tags in. It can be found be entering the following command on your terminal or cleaner.
 
 ``` console 
 root@user:~$ curl --header "Private-Token: your-access-token" "https://gitlab.com/api/v4/projects/project_id:/registry/repositories" | python3 -m json.tool
