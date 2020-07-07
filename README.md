@@ -35,3 +35,9 @@ root@user:~$ crontab -e
 ```bash
  0 9 * * * /bin/python3 /path/to/deletor.py
  ```
+
+ - This command runs the Container Registry Cleaner Program every day at 9 am. 
+
+ - You can edit this using the reference below 
+
+ ![cron_cmd_image](https://github.com/Vasu77df/GitLab-Container-Repo-Cleaner/blob/master/images/cron_cmd_image.png)
