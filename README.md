@@ -1,5 +1,9 @@
-# Commands to setup the Gitlab Container registry deletor program as Scheduled job
+# Setup of the Gitlab Container registry deletor program as Scheduled job
 
+## For Windows : Setting up task schedular
+ - The deletor program would require python3 to installed if not avaiable in the system. 
+
+ 
 ## For Linux: Setting up a cron job
  
  - The deletor program would require python3 to installed if not avaiable, this can be done by running the following command in the terminal
@@ -41,6 +45,12 @@ root@user:~$ crontab -e
  - You can edit this using the reference below 
 
  ![cron_cmd_image](https://github.com/Vasu77df/GitLab-Container-Repo-Cleaner/blob/master/images/cron_cmd_image.png)
+
+ - The program can also be manually run by navigating to the folder of the program directory and entering the command.
+
+ ```console
+root@user:~$ python3 deletor.py
+```
 
 **The default configuration is to delete all Image tags in the Contaner registry that are older than 1 day but 5 images will be retained from deletion.**
 
@@ -88,4 +98,6 @@ root@user:~$ python3 regID_finder.py
 
 - The other parameters you can see are various filters that are used to delete container image tags according to certain rules. 
 
-![api_filter]()
+![api_filter](https://github.com/Vasu77df/GitLab-Container-Repo-Cleaner/blob/master/images/api_filter.png)
+
+## 
