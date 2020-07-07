@@ -124,3 +124,58 @@ root@user:~$ python3 regID_finder.py
 
 ![api_filter](https://github.com/Vasu77df/GitLab-Container-Repo-Cleaner/blob/master/images/api_filter.png)
 
+## Garbage Collection to free up Disk Space
+---
+
+- To free up disk space in a you Gitlab Server the following command has to be run on the server. 
+
+```console 
+root@user:~$ sudo /opt/gitlab/embedded/bin/registry garbage-collect -m /var/opt/gitlab/registry/config.yml
+```
+
+This command will delete all layers that are unreferenceed by the tags and without manifests 
+
+- To set this command as a cron job in your Gitlab server to run everyday at 9 pm. 
+
+```console
+ 0 21 * * * sudo /opt/gitlab/embedded/bin/registry garbage-collect -m /var/opt/gitlab/registry/config.yml
+```
+
+**Running this command will stop the Container Registry and users will not be able to access them causing a downtime**
+
+### Performing garbage collection without downtime
+---
+
+You can perform a garbage collection without stopping the Container Registry by setting it into a read-only mode and by not using the built-in command. During this time, you will be able to pull from the Container Registry, but you will not be able to push.
+
+To enable the read-only mode:
+
+- In /etc/gitlab/gitlab.rb, specify the read-only mode:
+
+```json
+  registry['storage'] = {
+    'filesystem' => {
+      'rootdirectory' => "<your_registry_storage_path>"
+    },
+    'maintenance' => {
+      'readonly' => {
+        'enabled' => true
+      }
+    }
+  }
+```
+
+- Save and reconfigure GitLab:
+
+```console
+sudo gitlab-ctl reconfigure
+```
+
+- sudo gitlab-ctl reconfigure
+
+```console 
+sudo /opt/gitlab/embedded/bin/registry garbage-collect -m /var/opt/gitlab/registry/config.yml
+```
+
+Follow this [link](https://docs.gitlab.com/ee/administration/packages/container_registry.html#container-registry-garbage-collection) for more reference about garbage collection. 
+---
