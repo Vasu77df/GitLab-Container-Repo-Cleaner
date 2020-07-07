@@ -28,6 +28,6 @@ root@user:~$ crontab -e
 
 - you will see the following file:
 
-![crontab_image](https://github.com/Vasu77df/Gitlab-Container-Registry-Cleaner/blob/master/images/crontab_image.png)
+![crontab_image](https://github.com/Vasu77df/GitLab-Container-Repo-Cleaner/blob/master/images/crontab_image.png)
 
  0 9 * * * /bin/python3 /path/to/deletor.py
