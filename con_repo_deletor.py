@@ -5,8 +5,8 @@ import pprint
 from time import sleep
 import logging
 
-def image_get(access_token, prj_id):
-    response = requests.get("https://gitlab.com/api/v4/projects/{prj_id}/registry/repositories".format(prj_id=prj_id), headers = {'Private-Token': access_token})
+def image_get(api_url, access_token, prj_id):
+    response = requests.get("https://{api_url}/api/v4/projects/{prj_id}/registry/repositories".format(api_url=api_url, prj_id=prj_id), headers = {'Private-Token': access_token})
     imagels_output = response.text
     return imagels_output 
 
@@ -17,9 +17,9 @@ def payload_dictbuidler(payloads):
         payload['Payload {}'.format(i)] = out
     return payload
 
-def tags_deletor(access_token, prj_id, reg_id, name_regex_delete, keep_n, older_than, name_regex_keep):
+def tags_deletor(api_url, access_token, prj_id, reg_id, name_regex_delete, keep_n, older_than, name_regex_keep):
     data = {'name_regex_delete': name_regex_delete,'keep_n': keep_n, 'older_than': older_than, 'name_regex_keep': name_regex_keep}
-    response = requests.delete("https://gitlab.com/api/v4/projects/{prj_id}/registry/repositories/{reg_id}/tags".format(prj_id=prj_id, reg_id=reg_id), data=data, headers = {'Private-Token': access_token})
+    response = requests.delete("https://{api_url}/api/v4/projects/{prj_id}/registry/repositories/{reg_id}/tags".format(api_url=api_url, prj_id=prj_id, reg_id=reg_id), data=data, headers = {'Private-Token': access_token})
     response_status = str(response)
     response_msg = json.loads(response.text)
     if response_status == "<Response [202]>":
@@ -33,6 +33,7 @@ def tags_deletor(access_token, prj_id, reg_id, name_regex_delete, keep_n, older_
 def main():
     with open('credentials.json') as json_file:
         data = json.load(json_file)
+        api_url = data["API_URL"]
         access_token = data["Access-Token"]
         prj_id = data["Project ID"]
         reg_id = data["Registry ID"]
@@ -40,10 +41,10 @@ def main():
         keep_n = data["keep_n"]
         older_than = data["older_than"]
         name_regex_keep = data["name_regex_keep"]
-        dk_images = image_get(access_token, prj_id)
+        dk_images = image_get(api_url, access_token, prj_id)
         images = payload_dictbuidler(dk_images)
         pp = pprint.PrettyPrinter(indent=4)
         pp.pprint(images)
         print("Procesing Image Tags......")
-        tags_deletor(access_token, prj_id, reg_id, name_regex_delete, keep_n, older_than, name_regex_keep)
+        tags_deletor(api_url, access_token, prj_id, reg_id, name_regex_delete, keep_n, older_than, name_regex_keep)
 
